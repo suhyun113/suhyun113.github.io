@@ -18,9 +18,44 @@ layout: default
   {% include sidebar.html %}
 
   <div class="archive">
+
+    <!-- 프로필 정보 추가 -->
+    <section class="author-profile">
+      <div class="author-avatar">
+        <img src="{{ site.author.avatar }}" alt="{{ site.author.name }}" />
+      </div>
+      <div class="author-info">
+        <h1>{{ site.author.name }}</h1>
+        <p>{{ site.author.bio }}</p>
+        {% if site.author.location %}
+          <p><strong>위치:</strong> {{ site.author.location }}</p>
+        {% endif %}
+      </div>
+    </section>    
+
+    <!-- 페이지 제목 표시 -->>
     {% unless page.header.overlay_color or page.header.overlay_image %}
       <h1 id="page-title" class="page__title"{% if page.locale %} lang="{{ page.locale }}"{% endif %}>{{ page.title }}</h1>
     {% endunless %}
+
+    <!-- 콘텐츠 표시 -->
     {{ content }}
+
+    <!-- 최근 게시글 추가 -->
+     <section class="recent-posts">
+      <h2>최근 게시글</h2>
+      <ul>
+        {% for post in site.posts limit:5 %}
+          <li>
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            <small>{{ post.date | date: "%Y-%m-%d" }}</small>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <!-- Pagination -->
+     {% include pageinator.html %}
+    
   </div>
 </div>
